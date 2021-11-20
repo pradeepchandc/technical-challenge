@@ -1,23 +1,36 @@
 ﻿using BookCart.Application.Books.Commands.CreateBook;
 using BookCart.Application.Books.Commands.DeleteBook;
 using BookCart.Application.Books.Commands.UpdateBook;
+using BookCart.Application.Books.Queries.GetBook;
+using BookCart.Application.Books.Queries.ListBooks;
+using BookCart.Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookCart.API.Controllers;
-public class BookController : ApiControllerBase
+public class BooksController : ApiControllerBase
 {
-    // GET: api/<BookController>
-    [HttpGet]
-    public IEnumerable<string> Get()
+    
+    /// <summary>
+    /// Get book deatails
+    /// </summary>
+    /// <param name="id">Book Id</param>
+    /// <returns>Book details</returns>
+    [HttpGet("{id}")]
+    public async Task<ActionResult<BookDto>> Get(int id)
     {
-        return new string[] { "value1", "value2" };
+        //Calls the business logic handler using mediator
+        return await Mediator.Send(new GetBookQuery { Id = id });
     }
 
-    // GET api/<BookController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
+    /// <summary>
+    /// List the books with pagination.
+    /// </summary>
+    /// <param name="query">Page number and page size</param>
+    /// <returns>Paginated list of books</returns>
+    [HttpGet()]
+    public async Task<ActionResult<PaginatedList<BookDto>>> ListBooks([FromQuery] ListBooksQuery query)
     {
-        return "value";
+        return await Mediator.Send(query);
     }
 
     /// <summary>
@@ -28,7 +41,6 @@ public class BookController : ApiControllerBase
     [HttpPost]
     public async Task<ActionResult<int>> Create(CreateBookCommand command)
     {
-        //Calls the business logic handler using mediator
         return await Mediator.Send(command);
     }
 
@@ -39,7 +51,6 @@ public class BookController : ApiControllerBase
     [HttpPut()]
     public async Task<ActionResult> Update([FromBody] UpdateBookCommand request)
     {
-        //Calls the business logic handler using mediator
         await Mediator.Send(request);
 
         return NoContent();
@@ -52,7 +63,6 @@ public class BookController : ApiControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        //Calls the business logic handler using mediator
         await Mediator.Send(new DeleteBookCommand { Id = id });
 
         return NoContent();

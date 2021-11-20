@@ -31,6 +31,11 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand>
 
     public async Task<Unit> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
+        if (request == null)
+        {
+            throw new ArgumentNullException();
+        }
+
         var book = await _context.Books
             .FindAsync(new object[] { request.Id }, cancellationToken);
 

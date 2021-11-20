@@ -21,6 +21,11 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand>
 
     public async Task<Unit> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
     {
+        if (request == null)
+        {
+            throw new ArgumentNullException();
+        }
+
         var book = await _context.Books
             .FindAsync(new object[] { request.Id }, cancellationToken);
 

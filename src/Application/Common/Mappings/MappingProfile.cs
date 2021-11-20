@@ -10,8 +10,11 @@ public class MappingProfile : Profile
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
+
+    //Automapper mapping logic using reflection
     private void ApplyMappingsFromAssembly(Assembly assembly)
     {
+        //gets types where IMapFrom interface is implemented
         var types = assembly.GetExportedTypes()
             .Where(t => t.GetInterfaces().Any(i =>
                 i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
@@ -20,7 +23,6 @@ public class MappingProfile : Profile
         foreach (var type in types)
         {
             var instance = Activator.CreateInstance(type);
-
             var methodInfo = type.GetMethod("Mapping")
                 ?? type.GetInterface("IMapFrom`1")!.GetMethod("Mapping");
 
