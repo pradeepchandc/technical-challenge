@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTests", "tests\D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "src\API\API.csproj", "{B9CBC527-E230-4964-83F2-FC47C1E1F1B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.IntegrationTests", "tests\API.IntegrationTests\API.IntegrationTests.csproj", "{BDDD9710-AA18-4BA7-8305-E4A0ACF455F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.IntegrationTests", "tests\API.IntegrationTests\API.IntegrationTests.csproj", "{BDDD9710-AA18-4BA7-8305-E4A0ACF455F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
