@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookCart.Domain.Entities;
+﻿namespace BookCart.Domain.Entities;
 
 public class Book : AuditableEntity
 {

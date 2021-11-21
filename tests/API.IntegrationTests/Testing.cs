@@ -49,6 +49,7 @@ namespace API.IntegrationTests
                 TablesToIgnore = new[] { "__EFMigrationsHistory" }
             };
 
+            //Use this when relation DB is used. Cannot use for In memory
             //EnsureDatabase();
         }
 
@@ -72,7 +73,10 @@ namespace API.IntegrationTests
 
         public static async Task ResetState()
         {
+            //Below line can be used for clear relational DB connection
             //await _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
+
+            //Code set up for clear Inmemory database 
             using var scope = _scopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             await context.Database.EnsureDeletedAsync();

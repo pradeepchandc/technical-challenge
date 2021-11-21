@@ -7,6 +7,7 @@ using BookCart.Application.Common.Exceptions;
 using BookCart.Application.Common.Interfaces;
 using BookCart.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace BookCart.Application.Books.Commands.UpdateBook;
 
@@ -23,10 +24,12 @@ public class UpdateBookCommand : IRequest
 public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ILogger _logger;
 
-    public UpdateBookCommandHandler(IApplicationDbContext context)
+    public UpdateBookCommandHandler(IApplicationDbContext context, ILogger<UpdateBookCommand> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<Unit> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
@@ -51,7 +54,7 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand>
         book.CoverImage = request.CoverImage;
 
         await _context.SaveChangesAsync(cancellationToken);
-
+        _logger.LogInformation("Updated book: {Id}", book.Id);
         return Unit.Value;
     }
 }

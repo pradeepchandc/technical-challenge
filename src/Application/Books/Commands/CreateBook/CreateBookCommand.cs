@@ -1,6 +1,7 @@
 ﻿using BookCart.Application.Common.Interfaces;
 using BookCart.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace BookCart.Application.Books.Commands.CreateBook;
 
@@ -22,10 +23,11 @@ public class CreateBookCommand : IRequest<int>
 public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
 {
     private readonly IApplicationDbContext _context;
-
-    public CreateBookCommandHandler(IApplicationDbContext context)
+    private readonly ILogger _logger;
+    public CreateBookCommandHandler(IApplicationDbContext context, ILogger<CreateBookCommand> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -48,6 +50,8 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
 
         //Create a book entry in the DB
         await _context.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Created book: {Id}", book.Id);
 
         return book.Id;
     }

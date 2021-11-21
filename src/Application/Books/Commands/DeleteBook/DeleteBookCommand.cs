@@ -2,6 +2,7 @@
 using BookCart.Application.Common.Interfaces;
 using BookCart.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace BookCart.Application.Books.Commands.DeleteBook;
 
@@ -13,10 +14,12 @@ public class DeleteBookCommand : IRequest
 public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ILogger _logger;
 
-    public DeleteBookCommandHandler(IApplicationDbContext context)
+    public DeleteBookCommandHandler(IApplicationDbContext context, ILogger<DeleteBookCommand> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<Unit> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
@@ -37,6 +40,7 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand>
         _context.Books.Remove(book);
 
         await _context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation("Deleted book: {Id}", book.Id);
 
         return Unit.Value;
     }

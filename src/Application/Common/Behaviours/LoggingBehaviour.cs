@@ -1,5 +1,4 @@
-﻿using BookCart.Application.Common.Interfaces;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
 namespace BookCart.Application.Common.Behaviours;
