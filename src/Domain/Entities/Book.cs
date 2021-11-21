@@ -1,4 +1,6 @@
-﻿namespace BookCart.Domain.Entities
+﻿using BookCart.Domain.Common;
+
+namespace BookCart.Domain.Entities
 {
     public class Book : AuditableEntity
     {
