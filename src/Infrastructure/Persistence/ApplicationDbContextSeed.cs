@@ -1,16 +1,16 @@
 ﻿using BookCart.Domain.Entities;
 
-namespace BookCart.Infrastructure.Persistence;
-
-public static class ApplicationDbContextSeed
+namespace BookCart.Infrastructure.Persistence
 {
-    public static async Task SeedDataAsync(ApplicationDbContext context)
+    public static class ApplicationDbContextSeed
     {
-        // Seed, if necessary
-        if (!context.Books.Any())
+        public static async Task SeedDataAsync(ApplicationDbContext context)
         {
-            await context.Books.AddRangeAsync(new List<Book>
-            { 
+            // Seed, if necessary
+            if (!context.Books.Any())
+            {
+                await context.Books.AddRangeAsync(new List<Book>
+            {
                 new Book{
                     Author = "Paulo Coelho",
                     CoverImage = "Cover Image 1",
@@ -27,7 +27,8 @@ public static class ApplicationDbContextSeed
             }
             });
 
-            await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

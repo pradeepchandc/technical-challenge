@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 
-namespace BookCart.Application.Books.Commands.DeleteBook;
-
-public class DeleteBookCommandValidator : AbstractValidator<DeleteBookCommand>
+namespace BookCart.Application.Books.Commands.DeleteBook
 {
-    public DeleteBookCommandValidator()
+    public class DeleteBookCommandValidator : AbstractValidator<DeleteBookCommand>
     {
-        RuleFor(b => b.Id)
-            .NotEmpty();
+        public DeleteBookCommandValidator()
+        {
+            RuleFor(b => b.Id)
+                .NotEmpty();
+        }
     }
 }

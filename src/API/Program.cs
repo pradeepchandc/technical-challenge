@@ -1,45 +1,47 @@
 using BookCart.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookCart.API;
-public class Program
+namespace BookCart.API
 {
-    public async static Task Main(string[] args)
+    public class Program
     {
-        var host = CreateHostBuilder(args).Build();
-
-        using (var scope = host.Services.CreateScope())
+        public async static Task Main(string[] args)
         {
-            var services = scope.ServiceProvider;
+            var host = CreateHostBuilder(args).Build();
 
-            try
+            using (var scope = host.Services.CreateScope())
             {
-                var context = services.GetRequiredService<ApplicationDbContext>();
+                var services = scope.ServiceProvider;
 
-                if (context.Database.IsSqlServer())
+                try
                 {
-                    context.Database.Migrate();
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+
+                    if (context.Database.IsSqlServer())
+                    {
+                        context.Database.Migrate();
+                    }
+
+                    await ApplicationDbContextSeed.SeedDataAsync(context);
                 }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-                await ApplicationDbContextSeed.SeedDataAsync(context);
+                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+                    throw;
+                }
             }
-            catch (Exception ex)
-            {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-                logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                throw;
-            }
+            await host.RunAsync();
         }
 
-        await host.RunAsync();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
 }

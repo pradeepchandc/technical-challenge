@@ -6,43 +6,44 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace API.IntegrationTests.Books.Commands;
-
-using static Testing;
-
-public class CreateBookTests : TestBase
+namespace API.IntegrationTests.Books.Commands
 {
-    [Test]
-    public async Task ShouldRequireMinimumFields()
+    using static Testing;
+
+    public class CreateBookTests : TestBase
     {
-        var command = new CreateBookCommand();
-
-        await FluentActions.Invoking(() =>
-            SendAsync(command)).Should().ThrowAsync<ValidationException>();
-    }
-
-    [Test]
-    public async Task ShouldCreateBook()
-    {
-
-        var command = new CreateBookCommand
+        [Test]
+        public async Task ShouldRequireMinimumFields()
         {
-            Title = "Title 1",
-            Author = "Author 1",
-            CoverImage = "Image 1",
-            Description = "Description 1",
-            Price = 100
-        };
+            var command = new CreateBookCommand();
 
-        var bookId = await SendAsync(command);
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
+        }
 
-        var book = await FindAsync<Book>(bookId);
+        [Test]
+        public async Task ShouldCreateBook()
+        {
 
-        book.Should().NotBeNull();
-        book!.Title.Should().Be(command.Title);
-        book.Author.Should().Be(command.Author);
-        book.Price.Should().Be(command.Price);
-        book.LastModifiedBy.Should().BeNull();
-        book.LastModified.Should().BeNull();
+            var command = new CreateBookCommand
+            {
+                Title = "Title 1",
+                Author = "Author 1",
+                CoverImage = "Image 1",
+                Description = "Description 1",
+                Price = 100
+            };
+
+            var bookId = await SendAsync(command);
+
+            var book = await FindAsync<Book>(bookId);
+
+            book.Should().NotBeNull();
+            book!.Title.Should().Be(command.Title);
+            book.Author.Should().Be(command.Author);
+            book.Price.Should().Be(command.Price);
+            book.LastModifiedBy.Should().BeNull();
+            book.LastModified.Should().BeNull();
+        }
     }
 }

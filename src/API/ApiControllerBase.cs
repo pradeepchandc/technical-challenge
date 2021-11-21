@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookCart.API.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-//TODO : Disabled authorization. Do app registarion and add config in appsettings.json in AzureAd section and enable this.
-//[Authorize]
-public abstract class ApiControllerBase : ControllerBase
+namespace BookCart.API
 {
-    private ISender _mediator = null!;
+    [ApiController]
+    [Route("api/[controller]")]
+    //TODO : Disabled authorization. Do app registarion and add config in appsettings.json in AzureAd section and enable this.
+    //[Authorize]
+    public abstract class ApiControllerBase : ControllerBase
+    {
+        private ISender _mediator = null!;
 
-    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+        protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+    }
 }

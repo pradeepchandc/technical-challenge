@@ -5,33 +5,34 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace API.IntegrationTests.Books.Queries;
-
-using static Testing;
-
-public class GetBookTests : TestBase
+namespace API.IntegrationTests.Books.Queries
 {
+    using static Testing;
 
-    [Test]
-    public async Task ShouldReturnBook()
+    public class GetBookTests : TestBase
     {
-        var book = new Book
+
+        [Test]
+        public async Task ShouldReturnBook()
         {
-            Author = "Paulo Coelho",
-            CoverImage = "Cover Image 1",
-            Description = "A magical fable about following your dream",
-            Title = "Alchemist",
-            Price = 499.99M
-        };
-        await AddAsync(book);
+            var book = new Book
+            {
+                Author = "Paulo Coelho",
+                CoverImage = "Cover Image 1",
+                Description = "A magical fable about following your dream",
+                Title = "Alchemist",
+                Price = 499.99M
+            };
+            await AddAsync(book);
 
-        var query = new GetBookQuery { Id = book.Id };
+            var query = new GetBookQuery { Id = book.Id };
 
-        var result = await SendAsync(query);
+            var result = await SendAsync(query);
 
-        result.Should().NotBeNull();
-        result!.Title.Should().Be(book.Title);
-        result.Author.Should().Be(book.Author);
-        result.Price.Should().Be(book.Price); ;
+            result.Should().NotBeNull();
+            result!.Title.Should().Be(book.Title);
+            result.Author.Should().Be(book.Author);
+            result.Price.Should().Be(book.Price); ;
+        }
     }
 }

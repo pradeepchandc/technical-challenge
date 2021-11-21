@@ -6,53 +6,54 @@ using FluentAssertions;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace API.IntegrationTests.Books.Commands;
-
-using static Testing;
-internal class DeleteBookTests : TestBase
+namespace API.IntegrationTests.Books.Commands
 {
-    [Test]
-    public async Task ShouldRequireMinimumFields()
+    using static Testing;
+    internal class DeleteBookTests : TestBase
     {
-        var command = new DeleteBookCommand();
-
-        await FluentActions.Invoking(() =>
-            SendAsync(command)).Should().ThrowAsync<ValidationException>();
-    }
-
-    [Test]
-    public async Task ShouldRequireValidBookId()
-    {
-        var command = new DeleteBookCommand { Id = -1 };
-
-        await FluentActions.Invoking(() =>
-            SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-    }
-
-    [Test]
-    public async Task ShouldDeleteBook()
-    {
-        //Create a book
-        var command = new CreateBookCommand
+        [Test]
+        public async Task ShouldRequireMinimumFields()
         {
-            Title = "Title 1",
-            Author = "Author 1",
-            CoverImage = "Image 1",
-            Description = "Description 1",
-            Price = 100
-        };
+            var command = new DeleteBookCommand();
 
-        var bookId = await SendAsync(command);
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
+        }
 
-        //delete the book
-        await SendAsync(new DeleteBookCommand
+        [Test]
+        public async Task ShouldRequireValidBookId()
         {
-            Id = bookId
-        });
+            var command = new DeleteBookCommand { Id = -1 };
 
-        var book = await FindAsync<Book>(bookId);
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+        }
 
-        //If delete is success book should be null
-        book.Should().BeNull();
+        [Test]
+        public async Task ShouldDeleteBook()
+        {
+            //Create a book
+            var command = new CreateBookCommand
+            {
+                Title = "Title 1",
+                Author = "Author 1",
+                CoverImage = "Image 1",
+                Description = "Description 1",
+                Price = 100
+            };
+
+            var bookId = await SendAsync(command);
+
+            //delete the book
+            await SendAsync(new DeleteBookCommand
+            {
+                Id = bookId
+            });
+
+            var book = await FindAsync<Book>(bookId);
+
+            //If delete is success book should be null
+            book.Should().BeNull();
+        }
     }
 }

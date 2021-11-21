@@ -4,44 +4,45 @@ using BookCart.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace BookCart.Application.Books.Commands.DeleteBook;
-
-public class DeleteBookCommand : IRequest
+namespace BookCart.Application.Books.Commands.DeleteBook
 {
-    public int Id { get; set; }
-}
-
-public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand>
-{
-    private readonly IApplicationDbContext _context;
-    private readonly ILogger _logger;
-
-    public DeleteBookCommandHandler(IApplicationDbContext context, ILogger<DeleteBookCommand> logger)
+    public class DeleteBookCommand : IRequest
     {
-        _context = context;
-        _logger = logger;
+        public int Id { get; set; }
     }
 
-    public async Task<Unit> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+    public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand>
     {
-        if (request == null)
+        private readonly IApplicationDbContext _context;
+        private readonly ILogger _logger;
+
+        public DeleteBookCommandHandler(IApplicationDbContext context, ILogger<DeleteBookCommand> logger)
         {
-            throw new ArgumentNullException();
+            _context = context;
+            _logger = logger;
         }
 
-        var book = await _context.Books
-            .FindAsync(new object[] { request.Id }, cancellationToken);
-
-        if (book == null)
+        public async Task<Unit> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
-            throw new NotFoundException(nameof(Book), request.Id);
+            if (request == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var book = await _context.Books
+                .FindAsync(new object[] { request.Id }, cancellationToken);
+
+            if (book == null)
+            {
+                throw new NotFoundException(nameof(Book), request.Id);
+            }
+
+            _context.Books.Remove(book);
+
+            await _context.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Deleted book: {Id}", book.Id);
+
+            return Unit.Value;
         }
-
-        _context.Books.Remove(book);
-
-        await _context.SaveChangesAsync(cancellationToken);
-        _logger.LogInformation("Deleted book: {Id}", book.Id);
-
-        return Unit.Value;
     }
 }
