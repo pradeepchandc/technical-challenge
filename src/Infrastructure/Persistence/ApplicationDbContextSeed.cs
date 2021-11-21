@@ -4,7 +4,7 @@ namespace BookCart.Infrastructure.Persistence;
 
 public static class ApplicationDbContextSeed
 {
-    public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+    public static async Task SeedDataAsync(ApplicationDbContext context)
     {
         // Seed, if necessary
         if (!context.Books.Any())

@@ -14,6 +14,8 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
 
     public async Task Process(TRequest request, CancellationToken cancellationToken)
     {
+        //TODO: Can log user info of every request here when authorization is enabled.
+
         var requestName = typeof(TRequest).Name;
 
         _logger.LogInformation("BookCart Request: {Name} {@Request}",

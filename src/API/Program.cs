@@ -21,7 +21,7 @@ public class Program
                     context.Database.Migrate();
                 }
 
-                await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                await ApplicationDbContextSeed.SeedDataAsync(context);
             }
             catch (Exception ex)
             {
