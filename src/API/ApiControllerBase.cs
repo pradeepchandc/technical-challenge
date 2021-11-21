@@ -6,7 +6,8 @@ namespace BookCart.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+//TODO : Disabled authorization. Do app registarion and add config in appsettings.json in AzureAd section and enable this.
+//[Authorize]
 public abstract class ApiControllerBase : ControllerBase
 {
     private ISender _mediator = null!;
