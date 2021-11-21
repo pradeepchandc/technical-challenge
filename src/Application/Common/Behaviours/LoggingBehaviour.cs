@@ -3,24 +3,25 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BookCart.Application.Common.Behaviours;
-
-public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
+namespace BookCart.Application.Common.Behaviours
 {
-    private readonly ILogger _logger;
-
-    public LoggingBehaviour(ILogger<TRequest> logger)
+    public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
     {
-        _logger = logger;
-    }
+        private readonly ILogger _logger;
 
-    public async Task Process(TRequest request, CancellationToken cancellationToken)
-    {
-        //TODO: Can log user info of every request here when authorization is enabled.
+        public LoggingBehaviour(ILogger<TRequest> logger)
+        {
+            _logger = logger;
+        }
 
-        var requestName = typeof(TRequest).Name;
+        public async Task Process(TRequest request, CancellationToken cancellationToken)
+        {
+            //TODO: Can log user info of every request here when authorization is enabled.
 
-        _logger.LogInformation("BookCart Request: {Name} {@Request}",
-            requestName, request);
+            var requestName = typeof(TRequest).Name;
+
+            _logger.LogInformation("BookCart Request: {Name} {@Request}",
+                requestName, request);
+        }
     }
 }

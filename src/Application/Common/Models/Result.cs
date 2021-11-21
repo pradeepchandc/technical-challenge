@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookCart.Application.Common.Models;
-
-public class Result
+namespace BookCart.Application.Common.Models
 {
-    internal Result(bool succeeded, IEnumerable<string> errors)
+    public class Result
     {
-        Succeeded = succeeded;
-        Errors = errors.ToArray();
-    }
+        internal Result(bool succeeded, IEnumerable<string> errors)
+        {
+            Succeeded = succeeded;
+            Errors = errors.ToArray();
+        }
 
-    public bool Succeeded { get; set; }
+        public bool Succeeded { get; set; }
 
-    public string[] Errors { get; set; }
+        public string[] Errors { get; set; }
 
-    public static Result Success()
-    {
-        return new Result(true, Array.Empty<string>());
-    }
+        public static Result Success()
+        {
+            return new Result(true, Array.Empty<string>());
+        }
 
-    public static Result Failure(IEnumerable<string> errors)
-    {
-        return new Result(false, errors);
+        public static Result Failure(IEnumerable<string> errors)
+        {
+            return new Result(false, errors);
+        }
     }
 }

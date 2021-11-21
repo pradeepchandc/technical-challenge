@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 
-namespace BookCart.Application.Common.Mappings;
-
-public interface IMapFrom<T>
+namespace BookCart.Application.Common.Mappings
 {
-    void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
+    public interface IMapFrom<T>
+    {
+        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
+    }
 }

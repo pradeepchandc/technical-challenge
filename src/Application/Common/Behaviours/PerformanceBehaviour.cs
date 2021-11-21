@@ -5,38 +5,39 @@ using BookCart.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace BookCart.Application.Common.Behaviours;
-
-public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+namespace BookCart.Application.Common.Behaviours
 {
-    private readonly Stopwatch _timer;
-    private readonly ILogger<TRequest> _logger;
-
-    public PerformanceBehaviour( ILogger<TRequest> logger )
+    public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
-        _timer = new Stopwatch();
+        private readonly Stopwatch _timer;
+        private readonly ILogger<TRequest> _logger;
 
-        _logger = logger;
-    }
-
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
-    {
-        _timer.Start();
-
-        var response = await next();
-
-        _timer.Stop();
-
-        var elapsedMilliseconds = _timer.ElapsedMilliseconds;
-
-        if (elapsedMilliseconds > 500)
+        public PerformanceBehaviour(ILogger<TRequest> logger)
         {
-            var requestName = typeof(TRequest).Name;
+            _timer = new Stopwatch();
 
-            _logger.LogWarning("BookCart Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
-                requestName, elapsedMilliseconds, request);
+            _logger = logger;
         }
 
-        return response;
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        {
+            _timer.Start();
+
+            var response = await next();
+
+            _timer.Stop();
+
+            var elapsedMilliseconds = _timer.ElapsedMilliseconds;
+
+            if (elapsedMilliseconds > 500)
+            {
+                var requestName = typeof(TRequest).Name;
+
+                _logger.LogWarning("BookCart Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
+                    requestName, elapsedMilliseconds, request);
+            }
+
+            return response;
+        }
     }
 }
