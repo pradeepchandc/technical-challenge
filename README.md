@@ -8,11 +8,12 @@
 * [AutoMapper](https://automapper.org/)
 * [FluentValidation](https://fluentvalidation.net/)
 * [NUnit](https://nunit.org/), [FluentAssertions](https://fluentassertions.com/), [Moq](https://github.com/moq) & [Respawn](https://github.com/jbogard/Respawn)
+* [Visual studio 2022](https://visualstudio.microsoft.com/launch/)
 
 ## Getting Started
 
 1. Install the latest [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-2. Install Visual studio 2022
+2. Install Visual studio 2022 [Visual studio 2022](https://visualstudio.microsoft.com/launch/)
 The project is created using Visual studio 2022 and .NET 6. Might face compatibilty issues if lower versions of visual studio is used. 
 
 ### Database Configuration
