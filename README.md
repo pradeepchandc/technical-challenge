@@ -44,6 +44,7 @@ For example, to add a new migration from the root folder:
 
 ### Testing
 To test use swagger end point : [Swagger](https://localhost:7178/swagger/index.html)
+<br/>
 If using Postman disable SSL verification. Postman collection is available in the Postman folder
 
 ## Overview
