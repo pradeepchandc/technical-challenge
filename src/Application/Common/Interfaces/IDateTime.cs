@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace BookCart.Application.Common.Interfaces;
-
-public interface IDateTime
+namespace BookCart.Application.Common.Interfaces
 {
-    DateTime Now { get; }
+    public interface IDateTime
+    {
+        DateTime Now { get; }
+    }
 }
