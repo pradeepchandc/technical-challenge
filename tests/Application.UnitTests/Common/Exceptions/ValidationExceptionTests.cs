@@ -2,6 +2,8 @@
 using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace BookCart.Application.UnitTests.Common.Exceptions
 {

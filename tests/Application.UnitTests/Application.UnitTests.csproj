@@ -6,7 +6,7 @@
         <AssemblyName>BookCart.Application.UnitTests</AssemblyName>
 
         <IsPackable>false</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <!--<ImplicitUsings>enable</ImplicitUsings>-->
         <Nullable>enable</Nullable>
     </PropertyGroup>
 

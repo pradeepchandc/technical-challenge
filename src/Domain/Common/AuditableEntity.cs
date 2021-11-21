@@ -1,4 +1,6 @@
-﻿namespace BookCart.Domain.Common
+﻿using System;
+
+namespace BookCart.Domain.Common
 {
     public abstract class AuditableEntity
     {

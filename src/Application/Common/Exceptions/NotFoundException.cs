@@ -1,4 +1,6 @@
-﻿namespace BookCart.Application.Common.Exceptions;
+﻿using System;
+
+namespace BookCart.Application.Common.Exceptions;
 
 public class NotFoundException : Exception
 {

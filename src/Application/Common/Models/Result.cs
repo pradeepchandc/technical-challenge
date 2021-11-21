@@ -1,4 +1,8 @@
-﻿namespace BookCart.Application.Common.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BookCart.Application.Common.Models;
 
 public class Result
 {

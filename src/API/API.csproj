@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <!--<ImplicitUsings>enable</ImplicitUsings>-->
     <UserSecretsId>aspnet-API-4E07F669-A3D7-4F07-A7D2-EE4FA69F5E9E</UserSecretsId>
     <RootNamespace>BookCart.API</RootNamespace>
     <AssemblyName>BookCart.API</AssemblyName>

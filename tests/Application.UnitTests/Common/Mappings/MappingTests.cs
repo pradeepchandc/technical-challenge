@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using AutoMapper;
 using BookCart.Application.Common.Mappings;
 using BookCart.Application.Common.Models;
