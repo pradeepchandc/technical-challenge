@@ -1,5 +1,10 @@
 # Technical Challenge : Book cart
 
+## Design
+
+* Clean architecture based solution template
+* CQRS + Meditr combination used
+
 ## Technologies
 
 * [ASP.NET Core 6](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0)
